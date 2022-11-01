@@ -353,6 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 4
   m_jumpForce: 7.5
+  default_gravity: 1.4
 --- !u!50 &1597635014
 Rigidbody2D:
   serializedVersion: 4
@@ -368,7 +369,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -405,6 +406,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1958292155673404873, guid: 064510fb3bdb9574dacede0b4d0b97b2, type: 3}
   m_PrefabInstance: {fileID: 1958292157414800595}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1752996127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752996122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d197d83ea8b230c489ef5c8be25b9844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifespan: 3
 --- !u!1001 &1958292157414800595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -422,11 +436,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1958292155673404878, guid: 064510fb3bdb9574dacede0b4d0b97b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.77
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 1958292155673404878, guid: 064510fb3bdb9574dacede0b4d0b97b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.23
+      value: -1.98
       objectReference: {fileID: 0}
     - target: {fileID: 1958292155673404878, guid: 064510fb3bdb9574dacede0b4d0b97b2, type: 3}
       propertyPath: m_LocalPosition.z

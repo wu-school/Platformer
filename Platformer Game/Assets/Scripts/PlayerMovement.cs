@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] float m_speed = 4.0f;
     [SerializeField] float m_jumpForce = 7.5f;
-
+    [SerializeField] float default_gravity = 1.4f;
     
     //private Animator m_animator;
     private Rigidbody2D m_body2d;
@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     int jumps = 3;
     bool fastfall = false;
     float delayToIdle;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
         //flip sprite according to facing direction
         float inputX = Input.GetAxis("Horizontal");
+        print(inputX);
 
         // Swap direction of sprite depending on walk direction
         if (inputX > 0)
@@ -59,11 +61,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputY < 0)
         {
-            m_body2d.gravityScale = 2;
+            m_body2d.gravityScale = 5 ;
         }
         else
         {
-            m_body2d.gravityScale = 1;
+            m_body2d.gravityScale = default_gravity;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && jumps>0)
