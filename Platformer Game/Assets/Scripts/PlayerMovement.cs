@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float m_speed = 4.0f;
     [SerializeField] float m_jumpForce = 7.5f;
     [SerializeField] float default_gravity = 1.4f;
+    [SerializeField] float fast_fall_multiplier = 3f;
 
     [SerializeField] RuntimeAnimatorController walk, idle, fall, jump;
     private Rigidbody2D m_body2d;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         //m_animator = GetComponent<Animator>();
         gameObject.GetComponent<SpriteRenderer>().size += new Vector2(5,5);
         m_body2d = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -37,7 +39,11 @@ public class PlayerMovement : MonoBehaviour
         //check if falling
         if(!grounded && m_body2d.velocity.y<0)
         {
-            gameObject.GetComponent<Animator>().runtimeAnimatorController = fall;
+            gameObject.GetComponent<Animator>().SetBool("Falling", true);
+        }
+        else
+        {
+            gameObject.GetComponent<Animator>().SetBool("Falling", false);
         }
 
         //flip sprite according to facing direction
@@ -47,30 +53,33 @@ public class PlayerMovement : MonoBehaviour
         // Swap direction of sprite depending on walk direction
         if (inputX > 0)
         {
+            gameObject.GetComponent<Animator>().SetBool("Idle", false);
+
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
             m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
             if (grounded)
             {
-                gameObject.GetComponent<Animator>().runtimeAnimatorController = walk;
+                gameObject.GetComponent<Animator>().SetBool("Walking", true);
             }
         }
 
         else if (inputX < 0)
         {
+            gameObject.GetComponent<Animator>().SetBool("Idle", false);
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
             m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
             if (grounded)
             {
-                gameObject.GetComponent<Animator>().runtimeAnimatorController = walk;
+                gameObject.GetComponent<Animator>().SetBool("Walking", true);
             }
         }
         else
         {
             if (grounded)
             {
-                gameObject.GetComponent<Animator>().runtimeAnimatorController = idle;
+                gameObject.GetComponent<Animator>().SetBool("Idle", true);
             }
         }
 
@@ -78,17 +87,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputY < 0)
         {
-            m_body2d.gravityScale = 5 ;
+            m_body2d.gravityScale = fast_fall_multiplier*default_gravity ;
+            gameObject.GetComponent<Animator>().SetBool("Fast Fall", true);
         }
         else
         {
             m_body2d.gravityScale = default_gravity;
+            gameObject.GetComponent<Animator>().SetBool("Fast Fall", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && jumps>0)
         { 
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            gameObject.GetComponent<Animator>().runtimeAnimatorController = jump;
+            gameObject.GetComponent<Animator>().SetTrigger("Jump");
             grounded = false;
             //m_animator.SetBool("Grounded", grounded);
             jumps--;
