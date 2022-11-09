@@ -17,7 +17,6 @@ public class DisappearPlatform : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1 - (time / lifespan));
         if (time >= lifespan)
         {
             Destroy(gameObject);
