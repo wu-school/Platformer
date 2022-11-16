@@ -11,13 +11,13 @@ public class ChangeText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myGen = GameObject.FindGameObjectsWithTag("Controller")[0].GetComponent<PlatformGenerator>();
-        myGUI.text = "You LOST! Score:" + myGen.points;
+        myGen = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<PlatformGenerator>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        myGUI.text = "You LOST! Score:" + myGen.points;
     }
 }

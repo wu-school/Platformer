@@ -9,17 +9,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float m_jumpForce = 7.5f;
     [SerializeField] float default_gravity = 1.4f;
     [SerializeField] float fast_fall_multiplier = 3f;
-
+    [SerializeField] PlatformGenerator myController;
     [SerializeField] RuntimeAnimatorController walk, idle, fall, jump;
     private Rigidbody2D m_body2d;
 
     private int m_facingDirection = 1;
     bool grounded = true;
     int maxjumps = 3;
-    int jumps = 3;
+    public int jumps = 3;
     bool fastfall = false;
     float delayToIdle;
     int points = 0;
+    [SerializeField] bool falling = false;
 
 
     // Start is called before the first frame update
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         //m_animator = GetComponent<Animator>();
         gameObject.GetComponent<SpriteRenderer>().size += new Vector2(5,5);
         m_body2d = GetComponent<Rigidbody2D>();
-        
+        myController = GameObject.Find("Controller").GetComponent<PlatformGenerator>();
     }
 
     // Update is called once per frame
@@ -38,19 +39,23 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("u ded");
             SceneManager.LoadScene("Lose");
+            myController.stopGeneration();
+            GameObject.Find("Controller").GetComponent<JumpCounter>().enabled = false;
         }
 
 
         refreshJumps();    
         
         //check if falling
-        if(!grounded && m_body2d.velocity.y<0)
+        if( m_body2d.velocity.y<0)
         {
             gameObject.GetComponent<Animator>().SetBool("Falling", true);
+            falling = true;
         }
         else
         {
             gameObject.GetComponent<Animator>().SetBool("Falling", false);
+            falling = false;
         }
 
         //flip sprite according to facing direction

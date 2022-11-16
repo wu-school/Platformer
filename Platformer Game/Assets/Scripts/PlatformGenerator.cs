@@ -7,18 +7,17 @@ public class PlatformGenerator : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] GameObject platform;
     public int points;
-    public GameObject myTextMesh;
+    public TextMeshProUGUI myTextMesh;
     void Start()
     {
         DontDestroyOnLoad(gameObject);
         InvokeRepeating("newPlatform", 2f, 2f);
-        myTextMesh = GameObject.Find("Text (TMP)");
     }
 
     // Update is called once per frame
     void Update()
     {
-      
+        myTextMesh.text = "Score: " + points;
     }
 
     void newPlatform()
@@ -39,5 +38,12 @@ public class PlatformGenerator : MonoBehaviour
             } 
         }
         
+    }
+
+    public void stopGeneration()
+    {
+        CancelInvoke();
+        CancelInvoke("newPlatform");
+        Debug.Log("stopping generation");
     }
 }
